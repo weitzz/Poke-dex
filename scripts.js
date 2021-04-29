@@ -52,6 +52,7 @@ const createPokemonCard = pokemon =>{
   searchBtn.addEventListener('click', event =>{
     pokeTypes = searchInput.value
     console.log(pokeTypes)
+	 event.preventDefault()
   })
   
   

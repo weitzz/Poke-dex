@@ -1,5 +1,9 @@
 const pokeContainer = document.getElementById('poke_container')
-const pokemons = 150;
+const searchBtn = document.getElementById('search-btn')
+const searchInput = document.getElementById('search-input')
+
+const pokemons = 30;
+
 const colors = {
 	fire: '#FDDFDF',
 	grass: '#DEFDE0',
@@ -20,7 +24,7 @@ const colors = {
 const mainTypes = Object.keys(colors)
 
 const fetchPokemons = async () =>{
-  for((let i = 1; i <= pokemons; i++){
+  for(let i = 1; i <= pokemons; i++){
     await getPokemon(i)
   }
 }
@@ -30,17 +34,22 @@ const getPokemon = async id =>{
   const url = `https://pokeapi.co/api/v2/pokemon/${id}`
   const res = await fetch(url)
   const pokemon = await res.json()
+
   createPokemonCard(pokemon)
-  
+
+  return pokemon
 }
 
 
 
-function createPokemonCard(pokemon){
+
+const createPokemonCard = pokemon =>{
   const pokemonEl = document.createElement('div')
   pokemonEl.classList.add('pokemon')
 
   const pokeTypes = pokemon.types.map(element => element.type.name)
+  
+  console.log(pokeTypes[0])
   const type = mainTypes.find(type => pokeTypes.indexOf(type)> -1)
   const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1)
   const color = colors[type]
@@ -49,9 +58,7 @@ function createPokemonCard(pokemon){
 
   const pokerInnerHTML = ` 
   <div class="img-container">
-            <img src="https://pokeres.bastionbot.org/images/pokemon/${
-							pokemon.id
-						}.png" alt="${name}" />
+    <img src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png" alt="${name}" />
         </div>
         <div class="info">
             <span class="number">#${pokemon.id
@@ -65,4 +72,3 @@ function createPokemonCard(pokemon){
   pokemonEl.innerHTML = pokerInnerHTML
   pokeContainer.appendChild(pokemonEl)
 }
-fetchPokemons();

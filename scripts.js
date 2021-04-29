@@ -47,9 +47,14 @@ const createPokemonCard = pokemon =>{
   const pokemonEl = document.createElement('div')
   pokemonEl.classList.add('pokemon')
 
-  const pokeTypes = pokemon.types.map(element => element.type.name)
+  let pokeTypes = pokemon.types.map(element => element.type.name)
   
-  console.log(pokeTypes[0])
+  searchBtn.addEventListener('click', event =>{
+    pokeTypes = searchInput.value
+    console.log(pokeTypes)
+  })
+  
+  
   const type = mainTypes.find(type => pokeTypes.indexOf(type)> -1)
   const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1)
   const color = colors[type]
